@@ -102,3 +102,25 @@ function logout() {
 if (window.location.pathname.includes("profile.html")) {
   window.onload = loadProfile;
 }
+
+
+
+function enableSwipe() {
+  const container = document.getElementById("swipeContainer");
+  let startX = 0;
+
+  container.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  container.addEventListener("touchend", (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (diff > 50) {
+      container.style.transform = "translateX(-100vw)";
+    } else if (diff < -50) {
+      container.style.transform = "translateX(0)";
+    }
+  });
+}
