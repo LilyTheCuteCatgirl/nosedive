@@ -49,7 +49,7 @@ function showMessage(msg) {
   if (el) el.textContent = msg;
 }
 
-// 🧾 Load profile page and user feed
+// 🧾 Load profile info + other users
 function loadProfile() {
   const username = localStorage.getItem("loggedInUser");
   const users = JSON.parse(localStorage.getItem("users") || "{}");
@@ -72,7 +72,7 @@ function loadProfile() {
   loadUserFeed(username, users);
 }
 
-// 🖼️ Load swipeable user feed
+// 🖼️ Load all other users into swipe feed
 function loadUserFeed(currentUser, users) {
   const feed = document.getElementById("userFeed");
   if (!feed) return;
@@ -92,21 +92,17 @@ function loadUserFeed(currentUser, users) {
   });
 }
 
-// 🚪 Logout
+// 🚪 Logout button
 function logout() {
   localStorage.removeItem("loggedInUser");
   window.location.href = "index.html";
 }
 
-// 🚀 Auto-run profile logic if on profile.html
-if (window.location.pathname.includes("profile.html")) {
-  window.onload = loadProfile;
-}
-
-
-
+// 👉 Swipe between profile and user pages
 function enableSwipe() {
   const container = document.getElementById("swipeContainer");
+  if (!container) return;
+
   let startX = 0;
 
   container.addEventListener("touchstart", (e) => {
@@ -118,13 +114,19 @@ function enableSwipe() {
     const diff = startX - endX;
 
     if (diff > 50) {
-      // swipe left
+      // Swipe left
       container.style.transform = "translateX(-100vw)";
     } else if (diff < -50) {
-      // swipe right
+      // Swipe right
       container.style.transform = "translateX(0)";
     }
   });
 }
 
-
+// 🚀 Auto-run on profile.html only
+if (window.location.pathname.includes("profile.html")) {
+  window.onload = () => {
+    loadProfile();
+    enableSwipe();
+  };
+}
