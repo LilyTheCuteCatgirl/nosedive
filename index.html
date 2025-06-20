@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Nosedive Lite</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Nosedive Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="profile-card">
-    <img src="assets/profile.jpg" alt="Profile Picture" class="profile-pic">
-    <h2>Lacie Pound</h2>
-    <p class="rating">⭐ <span id="rating">4.2</span></p>
-    <div class="buttons">
-      <button onclick="rate(1)">1 ★</button>
-      <button onclick="rate(2)">2 ★</button>
-      <button onclick="rate(3)">3 ★</button>
-      <button onclick="rate(4)">4 ★</button>
-      <button onclick="rate(5)">5 ★</button>
-    </div>
+  <div class="auth-card">
+    <h2>Nosedive Sign Up / Log In</h2>
+    <input type="text" id="username" placeholder="Username (e.g., lily.pitiot)" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="login()">Log In</button>
+    <p id="message"></p>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>

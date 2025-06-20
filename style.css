@@ -1,43 +1,30 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.profile-card {
+.auth-card {
   background: white;
   padding: 2em;
   border-radius: 1em;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 300px;
 }
 
-.profile-pic {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+.auth-card input {
+  display: block;
+  margin: 0.5em auto;
+  padding: 0.5em;
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
 }
 
-.rating {
-  font-size: 1.5em;
-  margin: 0.5em 0;
-}
-
-.buttons button {
-  margin: 0.2em;
+.auth-card button {
+  margin: 0.3em;
   padding: 0.5em 1em;
-  font-size: 1em;
+  background: #b0c4ff;
   border: none;
   border-radius: 0.5em;
   cursor: pointer;
-  background: #d0d0ff;
-  transition: 0.2s;
 }
 
-.buttons button:hover {
-  background: #a0a0ff;
+.auth-card button:hover {
+  background: #859fff;
 }
