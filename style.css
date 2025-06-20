@@ -73,3 +73,33 @@ button:hover {
     font-size: 2em;
   }
 }
+
+.user-feed {
+  display: flex;
+  overflow-x: auto;
+  padding: 1em 0;
+  gap: 1em;
+  scroll-snap-type: x mandatory;
+}
+
+.user-feed::-webkit-scrollbar {
+  display: none;
+}
+
+.user-card {
+  flex: 0 0 auto;
+  width: 150px;
+  background: #fff;
+  border-radius: 1em;
+  padding: 1em;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+  scroll-snap-align: center;
+}
+
+.user-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 0.5em;
+}

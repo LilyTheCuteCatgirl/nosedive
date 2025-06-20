@@ -49,7 +49,7 @@ function showMessage(msg) {
   if (el) el.textContent = msg;
 }
 
-// 🧾 Load profile page
+// 🧾 Load profile page and user feed
 function loadProfile() {
   const username = localStorage.getItem("loggedInUser");
   const users = JSON.parse(localStorage.getItem("users") || "{}");
@@ -68,6 +68,28 @@ function loadProfile() {
     nameDisplay.textContent = username;
     ratingDisplay.textContent = userData.rating.toFixed(1);
   }
+
+  loadUserFeed(username, users);
+}
+
+// 🖼️ Load swipeable user feed
+function loadUserFeed(currentUser, users) {
+  const feed = document.getElementById("userFeed");
+  if (!feed) return;
+
+  Object.keys(users).forEach((username) => {
+    if (username === currentUser) return;
+
+    const card = document.createElement("div");
+    card.className = "user-card";
+
+    card.innerHTML = `
+      <img src="assets/profile.jpg" alt="profile" />
+      <div>${username}</div>
+    `;
+
+    feed.appendChild(card);
+  });
 }
 
 // 🚪 Logout
