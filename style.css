@@ -1,12 +1,18 @@
 /* === Base === */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   background: linear-gradient(to bottom right, #f7cfdc, #f8e0ea);
-  min-height: 100vh;
   color: #333;
-  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* === Login / Signup / Profile Card === */
@@ -16,20 +22,20 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 90%;
-  margin: auto;
-  height: 100vh;
-  background: transparent;
-  box-shadow: none;
+  width: 90%;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 1em;
   padding: 2em;
-  border-radius: 0;
+  backdrop-filter: blur(8px);
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin: 2em;
 }
 
 /* === Inputs and Buttons === */
 input {
   width: 100%;
-  max-width: 300px;
   margin: 0.5em 0;
   padding: 1em;
   font-size: 1em;
@@ -40,7 +46,6 @@ input {
 
 button {
   width: 100%;
-  max-width: 300px;
   margin: 0.5em 0;
   padding: 1em;
   font-size: 1.1em;
@@ -49,6 +54,7 @@ button {
   background: #f8bdd4;
   color: #333;
   font-weight: bold;
+  cursor: pointer;
   transition: background 0.2s ease;
 }
 
@@ -139,7 +145,7 @@ button:hover {
   background: #f29bbf;
 }
 
-/* === Centered Top Nav (future tabs) === */
+/* === Typography === */
 h2, h3 {
   font-weight: 400;
   margin-top: 0.5em;
