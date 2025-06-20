@@ -1,14 +1,13 @@
+/* === Base === */
 body {
   font-family: Arial, sans-serif;
-  background: #f0f0f0;
   margin: 0;
-  padding: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  padding: 0;
+  background: #f0f0f0;
+  overflow: hidden;
 }
 
+/* === Reusable Cards === */
 .profile-card,
 .auth-card {
   background: white;
@@ -16,8 +15,8 @@ body {
   border-radius: 1em;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  width: 100%;
   max-width: 350px;
+  margin: 2em auto;
   box-sizing: border-box;
 }
 
@@ -33,6 +32,7 @@ body {
   margin: 0.5em 0;
 }
 
+/* === Forms === */
 input {
   width: 100%;
   margin: 0.5em 0;
@@ -59,57 +59,13 @@ button:hover {
   background: #859fff;
 }
 
-@media (max-width: 500px) {
-  .profile-card,
-  .auth-card {
-    padding: 1.5em;
-  }
-
-  button {
-    font-size: 1.2em;
-  }
-
-  .rating {
-    font-size: 2em;
-  }
-}
-
-.user-feed {
-  display: flex;
-  overflow-x: auto;
-  padding: 1em 0;
-  gap: 1em;
-  scroll-snap-type: x mandatory;
-}
-
-.user-feed::-webkit-scrollbar {
-  display: none;
-}
-
-.user-card {
-  flex: 0 0 auto;
-  width: 150px;
-  background: #fff;
-  border-radius: 1em;
-  padding: 1em;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  text-align: center;
-  scroll-snap-align: center;
-}
-
-.user-card img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 0.5em;
-}
-
-
+/* === Swipe Pages === */
 .swipe-container {
   display: flex;
   flex-direction: row;
-  width: 200vw;
-  transition: transform 0.4s ease;
+  width: 200vw; /* Two full screens */
+  height: 100vh;
+  transition: transform 0.3s ease;
   overflow: hidden;
 }
 
@@ -122,6 +78,7 @@ button:hover {
   box-sizing: border-box;
 }
 
+/* Optional colored backgrounds */
 .profile-page {
   background: #f5faff;
 }
@@ -130,51 +87,17 @@ button:hover {
   background: #fff6f9;
 }
 
-/* Swipe container with two side-by-side pages */
-.swipe-container {
-  display: flex;
-  flex-direction: row;
-  width: 200vw;
-  transition: transform 0.4s ease;
-  overflow: hidden;
-}
-
-/* Each page takes up full screen width */
-.swipe-page {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
-  flex-shrink: 0;
-  padding: 1em;
-  box-sizing: border-box;
-}
-
-/* Optional page backgrounds */
-.profile-page {
-  background: #f5faff;
-}
-
-.users-page {
-  background: #fff6f9;
-}
-
+/* === User Feed === */
 .user-feed {
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1em;
-  padding: 1em 0;
-  scroll-snap-type: x mandatory;
-}
-
-.user-feed::-webkit-scrollbar {
-  display: none;
+  padding: 1em;
 }
 
 .user-card {
-  flex: 0 0 auto;
   width: 140px;
-  scroll-snap-align: center;
   background: white;
   padding: 1em;
   border-radius: 1em;
@@ -188,4 +111,20 @@ button:hover {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 0.5em;
+}
+
+/* === Responsive for Mobile === */
+@media (max-width: 500px) {
+  .profile-card,
+  .auth-card {
+    padding: 1.5em;
+  }
+
+  button {
+    font-size: 1.2em;
+  }
+
+  .rating {
+    font-size: 2em;
+  }
 }

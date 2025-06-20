@@ -118,10 +118,13 @@ function enableSwipe() {
     const diff = startX - endX;
 
     if (diff > 50) {
+      // swipe left
       container.style.transform = "translateX(-100vw)";
     } else if (diff < -50) {
+      // swipe right
       container.style.transform = "translateX(0)";
     }
   });
 }
+
 
