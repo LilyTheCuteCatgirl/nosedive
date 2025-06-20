@@ -1,25 +1,20 @@
-// 🔐 Sign Up
-
-
-
-// 🌸 Inject demo users if localStorage is empty
+// 🌸 Inject demo users if none exist
 function loadDemoUsers() {
-  if (!localStorage.getItem("users")) {
-    const demoUsers = {
-      "ava.glow": { password: "1234", rating: 4.7 },
-      "milo.smiles": { password: "1234", rating: 3.9 },
-      "zoe.laughs": { password: "1234", rating: 4.3 },
-      "rex.mode": { password: "1234", rating: 2.1 },
+  let users = JSON.parse(localStorage.getItem("users") || "{}");
+
+  if (Object.keys(users).length === 0) {
+    users = {
+      "ava.glow": { password: "1234", rating: 4.7, ratings: [], numRatings: 1 },
+      "milo.smiles": { password: "1234", rating: 3.9, ratings: [], numRatings: 1 },
+      "zoe.laughs": { password: "1234", rating: 4.3, ratings: [], numRatings: 1 },
+      "rex.mode": { password: "1234", rating: 2.1, ratings: [], numRatings: 1 }
     };
-    localStorage.setItem("users", JSON.stringify(demoUsers));
+    localStorage.setItem("users", JSON.stringify(users));
   }
 }
+loadDemoUsers(); // 🪩 Call this immediately
 
-// 🪩 Call this on load (before any other logic)
-loadDemoUsers();
-
-
-
+// 🔐 Sign Up
 function signup() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value;
@@ -37,8 +32,8 @@ function signup() {
   users[username] = {
     password: password,
     rating: 4.2,
-    numRatings: 1,
-    ratings: []
+    ratings: [],
+    numRatings: 1
   };
 
   localStorage.setItem("users", JSON.stringify(users));
@@ -72,7 +67,7 @@ function showMessage(msg) {
   if (el) el.textContent = msg;
 }
 
-// 🧾 Load profile page and user feed
+// 🧾 Load profile and user feed
 function loadProfile() {
   const username = localStorage.getItem("loggedInUser");
   const users = JSON.parse(localStorage.getItem("users") || "{}");
@@ -95,12 +90,12 @@ function loadProfile() {
   loadUserFeed(username, users);
 }
 
-// 🖼️ Load swipeable user feed with rating buttons
+// 🧑‍🤝‍🧑 Load user feed with rating buttons
 function loadUserFeed(currentUser, users) {
   const feed = document.getElementById("userFeed");
   if (!feed) return;
 
-  feed.innerHTML = ""; // Clear old content
+  feed.innerHTML = "";
 
   Object.keys(users).forEach((username) => {
     if (username === currentUser) return;
@@ -125,7 +120,6 @@ function loadUserFeed(currentUser, users) {
     feed.appendChild(card);
   });
 
-  // Add event listeners to buttons after rendering
   feed.querySelectorAll("button").forEach(btn => {
     btn.addEventListener("click", () => {
       const target = btn.dataset.username;
@@ -135,7 +129,7 @@ function loadUserFeed(currentUser, users) {
   });
 }
 
-// ⭐️ Rating logic with weight
+// ⭐ Weighted Rating Logic
 function rateUser(targetUsername, stars) {
   const users = JSON.parse(localStorage.getItem("users") || "{}");
   const rater = localStorage.getItem("loggedInUser");
@@ -145,16 +139,14 @@ function rateUser(targetUsername, stars) {
   const raterRating = users[rater].rating || 1;
   const target = users[targetUsername];
 
-  // Add rating history if not present
   if (!target.ratings) target.ratings = [];
 
-  target.ratings.push({ from: rater, stars: stars });
+  target.ratings.push({ from: rater, stars });
 
-  // Weighted rating calculation
   let totalWeighted = 0;
   let totalWeight = 0;
 
-  target.ratings.forEach((entry) => {
+  target.ratings.forEach(entry => {
     const weight = users[entry.from]?.rating || 1;
     totalWeighted += entry.stars * weight;
     totalWeight += weight;
@@ -164,7 +156,7 @@ function rateUser(targetUsername, stars) {
   target.numRatings = target.ratings.length;
 
   localStorage.setItem("users", JSON.stringify(users));
-  loadUserFeed(rater, users); // Refresh feed
+  loadUserFeed(rater, users);
 }
 
 // 🚪 Logout
@@ -199,7 +191,7 @@ function enableSwipe() {
   });
 }
 
-// 🚀 Initialize on profile.html
+// 🚀 Init on profile.html only
 if (window.location.pathname.includes("profile.html")) {
   window.onload = () => {
     loadProfile();
