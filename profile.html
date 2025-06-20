@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Profile</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="profile-card">
+    <img src="assets/profile.jpg" alt="Profile Picture" class="profile-pic">
+    <h2 id="display-username">Username</h2>
+    <p class="rating">⭐ <span id="display-rating">0.0</span></p>
+    <button onclick="logout()">Log Out</button>
+  </div>
+  <script src="script.js"></script>
+  <script>
+  loadProfile();
+</script>
+
+</body>
+</html>

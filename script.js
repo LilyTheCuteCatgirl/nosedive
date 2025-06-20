@@ -1,45 +1,26 @@
-function signup() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value;
-
-  if (!username || !password) {
-    return showMessage("Please enter a username and password.");
-  }
-
-  let users = JSON.parse(localStorage.getItem("users") || "{}");
-
-  if (users[username]) {
-    return showMessage("User already exists. Please log in.");
-  }
-
-  users[username] = {
-    password: password,
-    rating: 4.2, // default starting rating
-  };
-
-  localStorage.setItem("users", JSON.stringify(users));
-  showMessage("Account created! You can now log in.");
+// Redirect to profile after login
+function redirectToProfile() {
+  window.location.href = "profile.html";
 }
 
-function login() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value;
+// Load user info on profile page
+function loadProfile() {
+  const username = localStorage.getItem("loggedInUser");
+  const users = JSON.parse(localStorage.getItem("users") || "{}");
 
-  let users = JSON.parse(localStorage.getItem("users") || "{}");
-
-  if (!users[username]) {
-    return showMessage("No such user. Please sign up first.");
+  if (!username || !users[username]) {
+    // Not logged in — go back
+    window.location.href = "index.html";
+    return;
   }
 
-  if (users[username].password !== password) {
-    return showMessage("Incorrect password.");
-  }
-
-  localStorage.setItem("loggedInUser", username);
-  showMessage(`Welcome, ${username}! You are logged in.`);
-  // Redirect or load profile page here later
+  const userData = users[username];
+  document.getElementById("display-username").textContent = username;
+  document.getElementById("display-rating").textContent = userData.rating.toFixed(1);
 }
 
-function showMessage(msg) {
-  document.getElementById("message").textContent = msg;
+// Log out and return to login page
+function logout() {
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "index.html";
 }
