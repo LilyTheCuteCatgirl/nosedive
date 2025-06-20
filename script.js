@@ -104,6 +104,7 @@ function enableSwipe() {
   if (!container) return;
 
   let startX = 0;
+  let edgeBuffer = 30; // px from edge
 
   container.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
@@ -113,15 +114,17 @@ function enableSwipe() {
     const endX = e.changedTouches[0].clientX;
     const diff = startX - endX;
 
+    // prevent edge swipes from triggering swipe logic
+    if (startX < edgeBuffer || startX > window.innerWidth - edgeBuffer) return;
+
     if (diff > 50) {
-      // Swipe left
       container.style.transform = "translateX(-100vw)";
     } else if (diff < -50) {
-      // Swipe right
       container.style.transform = "translateX(0)";
     }
   });
 }
+
 
 // 🚀 Auto-run on profile.html only
 if (window.location.pathname.includes("profile.html")) {
