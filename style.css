@@ -129,3 +129,63 @@ button:hover {
 .users-page {
   background: #fff6f9;
 }
+
+/* Swipe container with two side-by-side pages */
+.swipe-container {
+  display: flex;
+  flex-direction: row;
+  width: 200vw;
+  transition: transform 0.4s ease;
+  overflow: hidden;
+}
+
+/* Each page takes up full screen width */
+.swipe-page {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+/* Optional page backgrounds */
+.profile-page {
+  background: #f5faff;
+}
+
+.users-page {
+  background: #fff6f9;
+}
+
+.user-feed {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 1em;
+  padding: 1em 0;
+  scroll-snap-type: x mandatory;
+}
+
+.user-feed::-webkit-scrollbar {
+  display: none;
+}
+
+.user-card {
+  flex: 0 0 auto;
+  width: 140px;
+  scroll-snap-align: center;
+  background: white;
+  padding: 1em;
+  border-radius: 1em;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.user-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5em;
+}
