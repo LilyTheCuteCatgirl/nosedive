@@ -15,7 +15,9 @@ function signup() {
 
   users[username] = {
     password: password,
-    rating: 4.2, // Default starting score
+    rating: 4.2,
+    numRatings: 1,
+    ratings: []
   };
 
   localStorage.setItem("users", JSON.stringify(users));
@@ -49,7 +51,7 @@ function showMessage(msg) {
   if (el) el.textContent = msg;
 }
 
-// 🧾 Load profile info + other users
+// 🧾 Load profile page and user feed
 function loadProfile() {
   const username = localStorage.getItem("loggedInUser");
   const users = JSON.parse(localStorage.getItem("users") || "{}");
@@ -72,18 +74,17 @@ function loadProfile() {
   loadUserFeed(username, users);
 }
 
-// 🖼️ Load all other users into swipe feed
+// 🖼️ Load swipeable user feed with rating buttons
 function loadUserFeed(currentUser, users) {
   const feed = document.getElementById("userFeed");
   if (!feed) return;
 
-  feed.innerHTML = ""; // clear it
+  feed.innerHTML = ""; // Clear old content
 
   Object.keys(users).forEach((username) => {
     if (username === currentUser) return;
 
     const user = users[username];
-
     const card = document.createElement("div");
     card.className = "user-card";
 
@@ -92,30 +93,72 @@ function loadUserFeed(currentUser, users) {
       <div><strong>${username}</strong></div>
       <div>⭐ ${user.rating.toFixed(1)}</div>
       <div class="rate-buttons">
-        ${[1, 2, 3, 4, 5].map((star) => `
-          <button onclick="rateUser('${username}', ${star})">${star}</button>
+        ${[1, 2, 3, 4, 5].map(star => `
+          <button data-username="${username}" data-stars="${star}">
+            ${star}
+          </button>
         `).join("")}
       </div>
     `;
 
     feed.appendChild(card);
   });
+
+  // Add event listeners to buttons after rendering
+  feed.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.username;
+      const stars = parseInt(btn.dataset.stars);
+      rateUser(target, stars);
+    });
+  });
 }
 
+// ⭐️ Rating logic with weight
+function rateUser(targetUsername, stars) {
+  const users = JSON.parse(localStorage.getItem("users") || "{}");
+  const rater = localStorage.getItem("loggedInUser");
 
-// 🚪 Logout button
+  if (!users[targetUsername] || !users[rater]) return;
+
+  const raterRating = users[rater].rating || 1;
+  const target = users[targetUsername];
+
+  // Add rating history if not present
+  if (!target.ratings) target.ratings = [];
+
+  target.ratings.push({ from: rater, stars: stars });
+
+  // Weighted rating calculation
+  let totalWeighted = 0;
+  let totalWeight = 0;
+
+  target.ratings.forEach((entry) => {
+    const weight = users[entry.from]?.rating || 1;
+    totalWeighted += entry.stars * weight;
+    totalWeight += weight;
+  });
+
+  target.rating = totalWeighted / totalWeight;
+  target.numRatings = target.ratings.length;
+
+  localStorage.setItem("users", JSON.stringify(users));
+  loadUserFeed(rater, users); // Refresh feed
+}
+
+// 🚪 Logout
 function logout() {
   localStorage.removeItem("loggedInUser");
   window.location.href = "index.html";
 }
 
-// 👉 Swipe between profile and user pages
+// 👉 Swipe logic
 function enableSwipe() {
   const container = document.getElementById("swipeContainer");
   if (!container) return;
 
   let startX = 0;
-  let edgeBuffer = 30; // px from edge
+  const edgeBuffer = 30;
 
   container.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
@@ -125,7 +168,6 @@ function enableSwipe() {
     const endX = e.changedTouches[0].clientX;
     const diff = startX - endX;
 
-    // prevent edge swipes from triggering swipe logic
     if (startX < edgeBuffer || startX > window.innerWidth - edgeBuffer) return;
 
     if (diff > 50) {
@@ -136,43 +178,10 @@ function enableSwipe() {
   });
 }
 
-
-// 🚀 Auto-run on profile.html only
+// 🚀 Initialize on profile.html
 if (window.location.pathname.includes("profile.html")) {
   window.onload = () => {
     loadProfile();
     enableSwipe();
   };
-}
-
-function rateUser(targetUsername, stars) {
-  const users = JSON.parse(localStorage.getItem("users") || "{}");
-  const rater = localStorage.getItem("loggedInUser");
-
-  if (!users[targetUsername] || !users[rater]) return;
-
-  const raterRating = users[rater].rating || 1;
-  const target = users[targetUsername];
-
-  // Add to ratings history
-  if (!target.ratings) target.ratings = [];
-
-  target.ratings.push({ from: rater, stars: stars });
-
-  // Weighted average calculation
-  let totalWeighted = 0;
-  let totalWeight = 0;
-
-  target.ratings.forEach((r) => {
-    const fromUser = users[r.from];
-    const weight = fromUser?.rating || 1;
-    totalWeighted += r.stars * weight;
-    totalWeight += weight;
-  });
-
-  target.rating = totalWeighted / totalWeight;
-  target.numRatings = target.ratings.length;
-
-  localStorage.setItem("users", JSON.stringify(users));
-  loadUserFeed(rater, users); // Refresh view
 }
