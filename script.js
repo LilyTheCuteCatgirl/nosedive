@@ -77,20 +77,31 @@ function loadUserFeed(currentUser, users) {
   const feed = document.getElementById("userFeed");
   if (!feed) return;
 
+  feed.innerHTML = ""; // clear it
+
   Object.keys(users).forEach((username) => {
     if (username === currentUser) return;
+
+    const user = users[username];
 
     const card = document.createElement("div");
     card.className = "user-card";
 
     card.innerHTML = `
       <img src="assets/profile.jpg" alt="profile" />
-      <div>${username}</div>
+      <div><strong>${username}</strong></div>
+      <div>⭐ ${user.rating.toFixed(1)}</div>
+      <div class="rate-buttons">
+        ${[1, 2, 3, 4, 5].map((star) => `
+          <button onclick="rateUser('${username}', ${star})">${star}</button>
+        `).join("")}
+      </div>
     `;
 
     feed.appendChild(card);
   });
 }
+
 
 // 🚪 Logout button
 function logout() {
@@ -132,4 +143,36 @@ if (window.location.pathname.includes("profile.html")) {
     loadProfile();
     enableSwipe();
   };
+}
+
+function rateUser(targetUsername, stars) {
+  const users = JSON.parse(localStorage.getItem("users") || "{}");
+  const rater = localStorage.getItem("loggedInUser");
+
+  if (!users[targetUsername] || !users[rater]) return;
+
+  const raterRating = users[rater].rating || 1;
+  const target = users[targetUsername];
+
+  // Add to ratings history
+  if (!target.ratings) target.ratings = [];
+
+  target.ratings.push({ from: rater, stars: stars });
+
+  // Weighted average calculation
+  let totalWeighted = 0;
+  let totalWeight = 0;
+
+  target.ratings.forEach((r) => {
+    const fromUser = users[r.from];
+    const weight = fromUser?.rating || 1;
+    totalWeighted += r.stars * weight;
+    totalWeight += weight;
+  });
+
+  target.rating = totalWeighted / totalWeight;
+  target.numRatings = target.ratings.length;
+
+  localStorage.setItem("users", JSON.stringify(users));
+  loadUserFeed(rater, users); // Refresh view
 }

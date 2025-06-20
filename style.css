@@ -128,3 +128,16 @@ button:hover {
     font-size: 2em;
   }
 }
+.rate-buttons button {
+  font-size: 0.9em;
+  padding: 0.3em 0.5em;
+  margin: 0.2em;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+  cursor: pointer;
+}
+
+.rate-buttons button:hover {
+  background: #d0e0ff;
+}
