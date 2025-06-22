@@ -79,39 +79,30 @@ function loadUserFeed(currentUser, users) {
     const card = document.createElement("div");
     card.className = "user-card";
 
+    const starRow = [1, 2, 3, 4, 5].map(i => `
+      <span class="star" data-stars="${i}" data-username="${username}">☆</span>
+    `).join("");
+
     card.innerHTML = `
       <img src="assets/profile.jpg" alt="profile" />
       <div><strong>${username}</strong></div>
       <div>⭐ ${user.rating.toFixed(1)}</div>
-      <div class="star-rating" data-username="${username}">
-        ${[1, 2, 3, 4, 5].map(i => `<span class="star" data-stars="${i}">☆</span>`).join("")}
-      </div>
+      <div class="star-rating">${starRow}</div>
     `;
 
     feed.appendChild(card);
   });
 
-  // Add rating star click logic
-  document.querySelectorAll(".star-rating").forEach(group => {
-    const username = group.dataset.username;
-    group.querySelectorAll(".star").forEach(star => {
-      star.addEventListener("click", () => {
-        const rating = parseInt(star.dataset.stars);
-        rateUser(username, rating);
-      });
-    });
-  });
-}
-
-
-  feed.querySelectorAll("button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.username;
-      const stars = parseInt(btn.dataset.stars);
+  // Add click handlers to stars
+  document.querySelectorAll(".star-rating .star").forEach(star => {
+    star.addEventListener("click", () => {
+      const target = star.dataset.username;
+      const stars = parseInt(star.dataset.stars);
       rateUser(target, stars);
     });
   });
 }
+
 
 // ⭐ Weighted rating logic
 function rateUser(targetUsername, stars) {
