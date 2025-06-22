@@ -1,4 +1,3 @@
-
 body {
   margin: 0;
   padding: 0;
@@ -8,7 +7,9 @@ body {
   color: #333;
   overflow: hidden;
 }
-.auth-card, .profile-card {
+
+.auth-card,
+.profile-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +23,8 @@ body {
   border-radius: 0;
   text-align: center;
 }
-input {
+
+input, button {
   width: 100%;
   max-width: 300px;
   margin: 0.5em 0;
@@ -32,22 +34,18 @@ input {
   border-radius: 0.75em;
   background: rgba(255, 255, 255, 0.6);
 }
+
 button {
-  width: 100%;
-  max-width: 300px;
-  margin: 0.5em 0;
-  padding: 1em;
-  font-size: 1.1em;
-  border: none;
-  border-radius: 0.75em;
   background: #f8bdd4;
   color: #333;
   font-weight: bold;
   transition: background 0.2s ease;
 }
+
 button:hover {
   background: #f29bbf;
 }
+
 .profile-pic {
   width: 120px;
   height: 120px;
@@ -56,11 +54,13 @@ button:hover {
   margin-bottom: 1em;
   border: 5px solid rgba(255, 255, 255, 0.4);
 }
+
 .rating {
   font-size: 3em;
   font-weight: 200;
   margin: 0.2em;
 }
+
 .user-feed {
   display: flex;
   flex-wrap: wrap;
@@ -68,6 +68,7 @@ button:hover {
   padding: 2em;
   gap: 1em;
 }
+
 .user-card {
   background: rgba(255, 255, 255, 0.4);
   padding: 1em;
@@ -76,23 +77,14 @@ button:hover {
   width: 140px;
   backdrop-filter: blur(5px);
 }
+
 .user-card img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   margin-bottom: 0.5em;
 }
-.rate-buttons button {
-  font-size: 1em;
-  padding: 0.4em 0.6em;
-  margin: 0.2em;
-  border-radius: 50%;
-  background: #f8bdd4;
-  border: none;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-}
+
 .swipe-container {
   display: flex;
   flex-direction: row;
@@ -101,6 +93,7 @@ button:hover {
   transition: transform 0.3s ease;
   overflow: hidden;
 }
+
 .swipe-page {
   width: 100vw;
   height: 100vh;

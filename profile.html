@@ -1,31 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="swipe-container" id="swipeContainer">
     <div class="swipe-page profile-page">
       <div class="profile-card">
-        <img src="assets/profile.jpg" class="profile-pic" />
+        <img src="assets/profile.jpg" class="profile-pic" alt="Profile">
         <h2 id="display-username">Username</h2>
         <p class="rating">⭐ <span id="display-rating">0.0</span></p>
         <button onclick="logout()">Log Out</button>
       </div>
     </div>
     <div class="swipe-page users-page">
-      <h2 style="text-align:center;">Other Users</h2>
       <div class="user-feed" id="userFeed"></div>
     </div>
   </div>
   <script src="script.js"></script>
-  <script>
-    loadProfile();
-    enableSwipe();
-  </script>
 </body>
 </html>
