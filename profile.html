@@ -8,6 +8,8 @@
 </head>
 <body>
   <div class="swipe-container" id="swipeContainer">
+    
+    <!-- Profile View -->
     <div class="swipe-page profile-page">
       <div class="profile-card">
         <img src="assets/profile.jpg" class="profile-pic" alt="Profile">
@@ -16,10 +18,15 @@
         <button onclick="logout()">Log Out</button>
       </div>
     </div>
+
+    <!-- Other Users View -->
     <div class="swipe-page users-page">
+      <h3 style="text-align:center; margin-top: 1em;">Other Users</h3>
       <div class="user-feed" id="userFeed"></div>
     </div>
+    
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
