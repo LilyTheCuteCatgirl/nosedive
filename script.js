@@ -72,7 +72,7 @@ function loadUserFeed(currentUser, users) {
 
   feed.innerHTML = "";
 
-  Object.keys(users).forEach((username) => {
+  Object.keys(users).forEach(username => {
     if (username === currentUser) return;
 
     const user = users[username];
@@ -83,15 +83,26 @@ function loadUserFeed(currentUser, users) {
       <img src="assets/profile.jpg" alt="profile" />
       <div><strong>${username}</strong></div>
       <div>⭐ ${user.rating.toFixed(1)}</div>
-      <div class="rate-buttons">
-        ${[1, 2, 3, 4, 5].map(star =>
-          `<button data-username="${username}" data-stars="${star}">${star}</button>`
-        ).join("")}
+      <div class="star-rating" data-username="${username}">
+        ${[1, 2, 3, 4, 5].map(i => `<span class="star" data-stars="${i}">☆</span>`).join("")}
       </div>
     `;
 
     feed.appendChild(card);
   });
+
+  // Add rating star click logic
+  document.querySelectorAll(".star-rating").forEach(group => {
+    const username = group.dataset.username;
+    group.querySelectorAll(".star").forEach(star => {
+      star.addEventListener("click", () => {
+        const rating = parseInt(star.dataset.stars);
+        rateUser(username, rating);
+      });
+    });
+  });
+}
+
 
   feed.querySelectorAll("button").forEach((btn) => {
     btn.addEventListener("click", () => {

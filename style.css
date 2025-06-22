@@ -102,3 +102,18 @@ button:hover {
   padding: 1em;
   box-sizing: border-box;
 }
+.star-rating {
+  font-size: 2em;
+  margin-top: 0.5em;
+  color: #ffb6c1;
+  cursor: pointer;
+}
+
+.star-rating .star {
+  margin: 0 0.1em;
+  transition: transform 0.2s;
+}
+
+.star-rating .star:hover {
+  transform: scale(1.3);
+}
