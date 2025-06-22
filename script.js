@@ -79,22 +79,25 @@ function loadUserFeed(currentUser, users) {
     const card = document.createElement("div");
     card.className = "user-card";
 
-    const starRow = [1, 2, 3, 4, 5].map(i => `
-      <span class="star" data-stars="${i}" data-username="${username}">☆</span>
-    `).join("");
+    const ratingDisplay = `<div class="user-rating">⭐ ${user.rating.toFixed(1)}</div>`;
+
+    const stars = Array.from({ length: 5 }, (_, i) => {
+      return `<span class="star" data-stars="${i + 1}" data-username="${username}">☆</span>`;
+    }).join("");
 
     card.innerHTML = `
       <img src="assets/profile.jpg" alt="profile" />
       <div><strong>${username}</strong></div>
-      <div>⭐ ${user.rating.toFixed(1)}</div>
-      <div class="star-rating">${starRow}</div>
+      ${ratingDisplay}
+      <div class="star-rating">${stars}</div>
     `;
 
     feed.appendChild(card);
   });
 
   // Add click handlers to stars
-  document.querySelectorAll(".star-rating .star").forEach(star => {
+  const allStars = feed.querySelectorAll(".star-rating .star");
+  allStars.forEach(star => {
     star.addEventListener("click", () => {
       const target = star.dataset.username;
       const stars = parseInt(star.dataset.stars);
@@ -102,6 +105,7 @@ function loadUserFeed(currentUser, users) {
     });
   });
 }
+
 
 
 // ⭐ Weighted rating logic
