@@ -1,41 +1,30 @@
-/* === Base === */
-* {
-  box-sizing: border-box;
-}
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   background: linear-gradient(to bottom right, #f7cfdc, #f8e0ea);
+  min-height: 100vh;
   color: #333;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
 }
-
-/* === Login / Signup / Profile Card === */
-.auth-card,
-.profile-card {
+.auth-card, .profile-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  max-width: 400px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 1em;
+  max-width: 90%;
+  margin: auto;
+  height: 100vh;
+  background: transparent;
+  box-shadow: none;
   padding: 2em;
-  backdrop-filter: blur(8px);
+  border-radius: 0;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  margin: 2em;
 }
-
-/* === Inputs and Buttons === */
 input {
   width: 100%;
+  max-width: 300px;
   margin: 0.5em 0;
   padding: 1em;
   font-size: 1em;
@@ -43,9 +32,9 @@ input {
   border-radius: 0.75em;
   background: rgba(255, 255, 255, 0.6);
 }
-
 button {
   width: 100%;
+  max-width: 300px;
   margin: 0.5em 0;
   padding: 1em;
   font-size: 1.1em;
@@ -54,15 +43,11 @@ button {
   background: #f8bdd4;
   color: #333;
   font-weight: bold;
-  cursor: pointer;
   transition: background 0.2s ease;
 }
-
 button:hover {
   background: #f29bbf;
 }
-
-/* === Profile Image === */
 .profile-pic {
   width: 120px;
   height: 120px;
@@ -71,15 +56,11 @@ button:hover {
   margin-bottom: 1em;
   border: 5px solid rgba(255, 255, 255, 0.4);
 }
-
-/* === Rating Display === */
 .rating {
   font-size: 3em;
   font-weight: 200;
   margin: 0.2em;
 }
-
-/* === User Feed Cards === */
 .user-feed {
   display: flex;
   flex-wrap: wrap;
@@ -87,7 +68,6 @@ button:hover {
   padding: 2em;
   gap: 1em;
 }
-
 .user-card {
   background: rgba(255, 255, 255, 0.4);
   padding: 1em;
@@ -96,39 +76,12 @@ button:hover {
   width: 140px;
   backdrop-filter: blur(5px);
 }
-
 .user-card img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   margin-bottom: 0.5em;
 }
-
-/* === Swipe Layout === */
-.swipe-container {
-  display: flex;
-  flex-direction: row;
-  width: 200vw;
-  height: 100vh;
-  transition: transform 0.3s ease;
-  overflow: hidden;
-}
-
-.swipe-page {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
-  flex-shrink: 0;
-  padding: 1em;
-  box-sizing: border-box;
-}
-
-.profile-page,
-.users-page {
-  background: transparent;
-}
-
-/* === Rating Buttons === */
 .rate-buttons button {
   font-size: 1em;
   padding: 0.4em 0.6em;
@@ -140,12 +93,19 @@ button:hover {
   width: 40px;
   height: 40px;
 }
-
-.rate-buttons button:hover {
-  background: #f29bbf;
+.swipe-container {
+  display: flex;
+  flex-direction: row;
+  width: 200vw;
+  height: 100vh;
+  transition: transform 0.3s ease;
+  overflow: hidden;
 }
-
-h2, h3 {
-  font-weight: 400;
-  margin-top: 0.5em;
+.swipe-page {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+  padding: 1em;
+  box-sizing: border-box;
 }
